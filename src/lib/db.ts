@@ -7,7 +7,7 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD || 'secret',
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'postgres', // En nuestra db inicial el nombre por defecto de la base es postgres
+  database: process.env.DB_NAME || 'koregt', // La DB definida en el docker-compose
 });
 
 /**
