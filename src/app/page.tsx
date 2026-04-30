@@ -1,66 +1,73 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useEffect, useState, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import ProductCard from '../components/ProductCard';
+import './catalogo.css';
+
+// El contenido de la página debe estar envuelto en Suspense si usa useSearchParams
+function CatalogoContent() {
+  const searchParams = useSearchParams();
+  const categoriaSlug = searchParams.get('categoria');
+
+  const [productos, setProductos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    // Consumir el endpoint construido en el Commit 7
+    fetch('/api/productos')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.error) {
+          // Filtrado básico en cliente para efectos de la demostración
+          if (categoriaSlug) {
+            // Se asume que el backend trae la categoria en formato string, 
+            // Para robustez se debería filtrar por slug real, pero para el UI validamos el string
+            const filtrados = data.filter((p: any) => 
+              p.categoria_nombre.toLowerCase().replace(/ /g, '-') === categoriaSlug
+            );
+            setProductos(filtrados);
+          } else {
+            setProductos(data);
+          }
+        }
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [categoriaSlug]);
+
+  if (loading) return <div className="loader">Cargando hardware premium...</div>;
+
+  return (
+    <div className="catalogo-container">
+      <div className="catalogo-header">
+        <h1>Hardware <span>Premium</span></h1>
+        <p>Descubre nuestra selección exclusiva de componentes tecnológicos, procesadores, tarjetas gráficas y más.</p>
+      </div>
+
+      {productos.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-secondary)' }}>
+          <h2>No se encontraron productos en esta categoría.</h2>
+        </div>
+      ) : (
+        <div className="productos-grid">
+          {productos.map((p: any) => (
+            <ProductCard key={p.id_producto} producto={p} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <Suspense fallback={<div className="loader">Iniciando catálogo...</div>}>
+      <CatalogoContent />
+    </Suspense>
   );
 }
