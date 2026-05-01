@@ -43,8 +43,10 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id_usuario: 1, 
-          direccion_envio: `${formData.direccion}, ${formData.ciudad}. Facturar a NIT: ${formData.nit}. Método: ${detallesPago}`,
-          detalles: cart.map(item => ({
+          id_direccion: 1, // Simulando que seleccionó su primera dirección guardada
+          id_envio_metodo: 1, // Simulando envío estándar
+          id_pago_metodo: detallesPago.includes('PayPal') ? 2 : 1, // 1=Efectivo, 2=PayPal/Tarjeta
+          items: cart.map(item => ({
             id_producto: item.id_producto,
             cantidad: item.cantidad
           }))
