@@ -31,6 +31,9 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
+        <li style={{ marginTop: '2rem' }}>
+          <Link href="/admin" className="sidebar-link" style={{ color: 'var(--gold-primary)' }}>⚙️ Panel Admin</Link>
+        </li>
       </ul>
     </aside>
   );
