@@ -9,28 +9,33 @@ import './catalogo.css';
 function CatalogoContent() {
   const searchParams = useSearchParams();
   const categoriaSlug = searchParams.get('categoria');
+  const search = searchParams.get('search')?.toLowerCase();
 
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    // Consumir el endpoint construido en el Commit 7
     fetch('/api/productos')
       .then(res => res.json())
       .then(data => {
         if (!data.error) {
-          // Filtrado básico en cliente para efectos de la demostración
+          let filtrados = data;
+          
           if (categoriaSlug) {
-            // Se asume que el backend trae la categoria en formato string, 
-            // Para robustez se debería filtrar por slug real, pero para el UI validamos el string
-            const filtrados = data.filter((p: any) => 
+            filtrados = filtrados.filter((p: any) => 
               p.categoria_nombre.toLowerCase().replace(/ /g, '-') === categoriaSlug
             );
-            setProductos(filtrados);
-          } else {
-            setProductos(data);
           }
+          
+          if (search) {
+            filtrados = filtrados.filter((p: any) => 
+              p.nombre.toLowerCase().includes(search) || 
+              p.descripcion.toLowerCase().includes(search)
+            );
+          }
+          
+          setProductos(filtrados);
         }
         setLoading(false);
       })
@@ -38,7 +43,7 @@ function CatalogoContent() {
         console.error(error);
         setLoading(false);
       });
-  }, [categoriaSlug]);
+  }, [categoriaSlug, search]);
 
   if (loading) return <div className="loader">Cargando hardware premium...</div>;
 
