@@ -11,7 +11,7 @@ export default function Footer() {
         </div>
         <div className="footer-section">
           <h3>Enlaces Rápidos</h3>
-          <Link href="/catalogo">Catálogo Completo</Link>
+          <Link href="/">Catálogo Completo</Link>
           <Link href="/ofertas">Ofertas Exclusivas</Link>
           <Link href="/contacto">Soporte Técnico</Link>
         </div>

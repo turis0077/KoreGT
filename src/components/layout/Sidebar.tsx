@@ -22,11 +22,11 @@ export default function Sidebar() {
       <h3 className="sidebar-title">Descubre</h3>
       <ul className="sidebar-list">
         <li>
-          <Link href="/catalogo" className="sidebar-link">Todo el Catálogo</Link>
+          <Link href="/" className="sidebar-link">Todo el Catálogo</Link>
         </li>
         {categorias.map((c: any) => (
           <li key={c.id_categoria}>
-            <Link href={`/catalogo?categoria=${c.slug}`} className="sidebar-link">
+            <Link href={`/?categoria=${c.slug}`} className="sidebar-link">
               {c.nombre}
             </Link>
           </li>
