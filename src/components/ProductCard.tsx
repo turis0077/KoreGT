@@ -1,8 +1,25 @@
+'use client';
+
 import Link from 'next/link';
+import { useCart } from '../context/CartContext';
 
 export default function ProductCard({ producto }: { producto: any }) {
+  const { addToCart } = useCart();
+  
   // Placeholder elegante si no hay imagen
   const imgUrl = producto.imagen_principal || 'https://via.placeholder.com/400x400?text=KoreGT+Hardware';
+
+  const handleAddToCart = () => {
+    addToCart({
+      id_producto: producto.id_producto,
+      sku: producto.sku,
+      nombre: producto.nombre,
+      precio_unitario: parseFloat(producto.precio_unitario),
+      cantidad: 1,
+      stock_actual: producto.stock_actual,
+      imagen_principal: imgUrl
+    });
+  };
 
   return (
     <div className="product-card">
@@ -33,7 +50,11 @@ export default function ProductCard({ producto }: { producto: any }) {
           <Link href={`/producto/${producto.id_producto}`} className="btn-details">
             Ver Detalles
           </Link>
-          <button className="btn-gold" disabled={producto.stock_actual === 0}>
+          <button 
+            className="btn-gold" 
+            disabled={producto.stock_actual === 0}
+            onClick={handleAddToCart}
+          >
             + Carrito
           </button>
         </div>

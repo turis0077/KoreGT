@@ -3,12 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { useCart } from '../../../context/CartContext';
 import './producto.css';
 
 export default function ProductoDetail() {
   const params = useParams();
   const id = params?.id as string;
   
+  const { addToCart } = useCart();
+
   const [producto, setProducto] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -77,6 +80,22 @@ export default function ProductoDetail() {
     if (cantidad > 1) setCantidad(prev => prev - 1);
   };
 
+  const handleAddToCart = () => {
+    const imgPrincipal = producto.imagenes?.find((img: any) => img.es_principal)?.url 
+                      || producto.imagenes?.[0]?.url 
+                      || 'https://via.placeholder.com/400x400?text=KoreGT+Hardware';
+
+    addToCart({
+      id_producto: producto.id_producto,
+      sku: producto.sku,
+      nombre: producto.nombre,
+      precio_unitario: parseFloat(producto.precio_unitario),
+      cantidad: cantidad,
+      stock_actual: producto.stock_actual,
+      imagen_principal: imgPrincipal
+    });
+  };
+
   return (
     <div className="product-detail-container">
       {/* Navegación Miga de Pan */}
@@ -130,7 +149,11 @@ export default function ProductoDetail() {
               <button className="quantity-btn" onClick={handleAddCantidad} disabled={cantidad >= producto.stock_actual || producto.stock_actual === 0}>+</button>
             </div>
             
-            <button className="btn-large-gold" disabled={producto.stock_actual === 0}>
+            <button 
+              className="btn-large-gold" 
+              disabled={producto.stock_actual === 0}
+              onClick={handleAddToCart}
+            >
               Añadir al Carrito de Compras
             </button>
           </div>

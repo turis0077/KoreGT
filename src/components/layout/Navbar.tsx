@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 import { useTheme } from '../ThemeProvider';
-import './layout.css'; // Crearemos esto para los estilos de layout específicos
+import { useCart } from '../../context/CartContext';
+import './layout.css';
 
 export default function Navbar() {
   const { isDark, toggleTheme } = useTheme();
+  const { totalItems } = useCart();
 
   return (
     <nav className="navbar glass-panel">
@@ -35,7 +37,7 @@ export default function Navbar() {
           
           <Link href="/carrito" className="cart-icon">
             🛒
-            <span className="cart-badge">0</span>
+            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
           </Link>
 
           <Link href="/login" className="user-icon">

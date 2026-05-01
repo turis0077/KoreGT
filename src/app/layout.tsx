@@ -6,6 +6,8 @@ import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
 import Footer from "../components/layout/Footer";
 
+import { CartProvider } from "../context/CartContext";
+
 // Fuente premium sugerida para tech e-commerce
 const inter = Inter({
   subsets: ["latin"],
@@ -27,17 +29,20 @@ export default function RootLayout({
       <body className={inter.variable}>
         {/* Proveedor de Contexto para el Tema Oscuro/Claro */}
         <ThemeProvider>
-          <div className="app-layout">
-            <Navbar />
-            <div className="main-content-wrapper">
-              <Sidebar />
-              {/* Contenedor dinámico de la página actual */}
-              <main className="main-body">
-                {children}
-              </main>
+          {/* Proveedor de Carrito de Compras */}
+          <CartProvider>
+            <div className="app-layout">
+              <Navbar />
+              <div className="main-content-wrapper">
+                <Sidebar />
+                {/* Contenedor dinámico de la página actual */}
+                <main className="main-body">
+                  {children}
+                </main>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>
