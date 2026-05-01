@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 type ThemeContextType = {
   isDark: boolean;
   toggleTheme: () => void;
+  mounted: boolean;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -39,11 +40,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  // Prevenir destellos (mismatch de hidratación SSR vs CSR)
-  if (!mounted) return <>{children}</>;
-
+  // Mantenemos el Provider siempre renderizado para que no falle useContext
+  // El 'mounted' se puede usar por los componentes hijos si desean evitar destellos,
+  // pero el proveedor en sí no debe omitirse.
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDark, toggleTheme, mounted }}>
       {children}
     </ThemeContext.Provider>
   );
