@@ -1,0 +1,82 @@
+Universidad del Valle de Guatemala
+Facultad de Ingeniería
+Ciencia de la Computación y T ecnologías de la información
+cc3088 - Bases de Datos 1 Ciclo 1, 2026
+Proyecto 2
+1 Descripción del proyecto
+El proyecto es individual. Consiste en diseñar y desarrollar una aplicación web para gestionar el
+inventario y las ventas de una tienda. La aplicación debe incluir frontend, backend y base de datos
+relacional, y debe desplegarse mediante Docker.
+El dominio de negocio es el mismo para todos; lo que varía entre entregas es la profundidad del
+diseño de base de datos y la cantidad de funcionalidades implementadas. No existe un esquema
+mínimo obligatorio: cada estudiante diseña su propia base de datos y obtiene puntos en función
+de las tareas que complete. El puntaje total posible supera los 100 puntos, pero la nota máxima
+acreditable es 100 .
+Contexto del negocio
+La tienda maneja productos agrupados en categorías, comprados a proveedores. Los clientes
+realizan compras atendidas por empleados. Cada compra puede incluir varios productos y debe
+quedar registrada junto con el detalle de lo vendido. La tienda necesita controlar el stock disponible
+y generar reportes de ventas.
+2 Restricciones técnicas
+• DBMS relacional: MySQL, PostgreSQL, SQLite o SQL Server (a elección).
+• Stack libre. Las queries deben ser SQL explícito; no se aceptan ORMs que oculten el SQL.
+• Docker obligatorio. T oda la infraestructura (base de datos, backend, frontend) debe definirse
+en un docker-compose.yml. El proyecto debe levantarse únicamente con docker compose up .
+• Variables de entorno: todas las credenciales deben gestionarse mediante un archivo .env (no
+hardcodeadas). El repositorio debe incluir un .env.example con las variables requeridas.
+• Credenciales fijas para calificación: el usuario de base de datos debe ser proy2 y la contra-
+seña secret. No se calificará un proyecto que use credenciales distintas.
+• Las transacciones deben marcarse explícitamente en el código ( BEGIN / COMMIT / ROLLBACK o
+equivalente).
+• T odo el trabajo se entrega en un repositorio de GitHub. El README debe permitir levantar el
+proyecto desde cero.
+Página 1
+Universidad del Valle de Guatemala
+Facultad de Ingeniería
+Ciencia de la Computación y T ecnologías de la información
+cc3088 - Bases de Datos 1 Ciclo 1, 2026
+3 Rúbrica de evaluación
+Cada tarea se califica como aprobada o no aprobada; no hay puntaje parcial por tarea. Se suman
+los puntos de las tareas aprobadas. La nota máxima acreditable es 100 puntos.
+I. Diseño de base de datos
+Diagrama ER correcto: entidades, atributos, relaciones y cardinalidades 8
+Modelo relacional documentado (esquema en notación relacional) 7
+Normalización justificada hasta 3FN: dependencias funcionales y pasos aplicados 10
+DDL completo con PRIMARY KEY , FOREIGN KEY y NOT NULL 5
+Script de datos de prueba realistas con al menos 25 registros por tabla 5
+Índices definidos explícitamente ( CREATE INDEX ) en al menos 2 columnas justificadas 5
+Subtotal posible 40
+II. SQL
+Todas las consultas de esta categoría deben ejecutarse desde la aplicación web, no como scripts independientes.
+3 consultas con JOIN entre múltiples tablas, visibles en la UI 10
+2 consultas con subquery ( IN, EXISTS, subquery correlacionado o en FROM), visibles en la UI 10
+Consultas con GROUP BY , HAVING y funciones de agregación, visibles en la UI 8
+Al menos 1 consulta usando CTE ( WITH), visible en la UI 5
+Al menos 1 VIEW utilizado por el backend para alimentar la UI 5
+Al menos 1 transacción explícita con manejo de error y ROLLBACK 12
+Subtotal posible 50
+Página 2
+Universidad del Valle de Guatemala
+Facultad de Ingeniería
+Ciencia de la Computación y T ecnologías de la información
+cc3088 - Bases de Datos 1 Ciclo 1, 2026
+III. Aplicación web
+CRUD completo de al menos 2 entidades en la interfaz 15
+Al menos 1 reporte visible en la UI con datos reales de la base de datos 10
+Manejo visible de errores para el usuario (validaciones, mensajes) 5
+README con instrucciones funcionales y ejemplo de docker compose up 5
+Subtotal posible 35
+IV. Avanzado
+Autenticación de usuarios (login/logout con sesión) 10
+Exportar al menos 1 reporte a CSV o PDF desde la UI 5
+Subtotal posible 15
+Total posible 140
+Nota máxima acreditable 100
+Notas:
+• Un proyecto que no levante con docker compose up siguiendo el README no se evalúa en las
+categorías II–IV.
+• Un proyecto con credenciales distintas a proy2 / secret no se evalúa en ningún criterio que
+requiera conexión a la base de datos.
+• Las entregas se realizan según las fechas publicadas en Canvas. T odo el trabajo debe estar en
+el repositorio de GitHub antes del cierre.
+Página 3
