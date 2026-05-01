@@ -1,0 +1,54 @@
+.static-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.static-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.static-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.static-header h1 span {
+  color: var(--accent);
+}
+
+.static-header p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.static-content {
+  padding: 3rem;
+  border-radius: 16px;
+  line-height: 1.8;
+}
+
+.static-content h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.static-content p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.static-content ul {
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.static-content li {
+  margin-bottom: 0.5rem;
+}
