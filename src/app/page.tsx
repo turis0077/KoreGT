@@ -24,7 +24,7 @@ function CatalogoContent() {
           
           if (categoriaSlug) {
             filtrados = filtrados.filter((p: any) => 
-              p.categoria_nombre.toLowerCase().replace(/ /g, '-') === categoriaSlug
+              p.categoria_slug === categoriaSlug
             );
           }
           
